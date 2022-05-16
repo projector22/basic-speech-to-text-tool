@@ -6,8 +6,8 @@
 ##
 
 import argparse
-# from email.mime import audio
 import speech_recognition as sr
+from tools.spinner import Spinner
 
 ap = argparse.ArgumentParser()
 ap.add_argument("-f", required=False, help="Name the path to the file to convert")
@@ -42,8 +42,9 @@ try:
     # to use another API key, use `r.recognize_google(audio, key="GOOGLE_SPEECH_RECOGNITION_API_KEY")`
     # instead of `r.recognize_google(audio)`
     # print("Google Speech Recognition thinks you said " + r.recognize_google(audio))
-    print("Analyzing...")
-    output = r.recognize_google(audio)
+    print("Analyzing...", end="")
+    with Spinner():
+        output = r.recognize_google(audio)
 except sr.UnknownValueError:
     print("Google Speech Recognition could not understand audio")
 except sr.RequestError as e:
